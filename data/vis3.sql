@@ -14,10 +14,10 @@ ORDER BY MonthStart;
 -- Drill-down: Produktmix (försäljning per kategori) i juni 2025
 SELECT pc.Name AS CategoryName, SUM(sod.LineTotal) AS Sales
 FROM Sales.SalesOrderHeader soh
-JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
-JOIN Production.Product p ON sod.ProductID = p.ProductID
-JOIN Production.ProductSubcategory psc ON p.ProductSubcategoryID = psc.ProductSubcategoryID
-JOIN Production.ProductCategory pc ON psc.ProductCategoryID = pc.ProductCategoryID
+INNER JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
+INNER JOIN Production.Product p ON sod.ProductID = p.ProductID
+INNER JOIN Production.ProductSubcategory psc ON p.ProductSubcategoryID = psc.ProductSubcategoryID
+INNER JOIN Production.ProductCategory pc ON psc.ProductCategoryID = pc.ProductCategoryID
 WHERE soh.OrderDate >= '2025-06-01' AND soh.OrderDate < '2025-07-01'
 GROUP BY pc.Name
 ORDER BY Sales DESC;
@@ -30,10 +30,10 @@ SELECT
     pc.Name AS CategoryName,
     SUM(sod.LineTotal) AS Sales
 FROM Sales.SalesOrderHeader soh
-JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
-JOIN Production.Product p ON sod.ProductID = p.ProductID
-JOIN Production.ProductSubcategory psc ON p.ProductSubcategoryID = psc.ProductSubcategoryID
-JOIN Production.ProductCategory pc ON psc.ProductCategoryID = pc.ProductCategoryID
+INNER JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
+INNER JOIN Production.Product p ON sod.ProductID = p.ProductID
+INNER JOIN Production.ProductSubcategory psc ON p.ProductSubcategoryID = psc.ProductSubcategoryID
+INNER JOIN Production.ProductCategory pc ON psc.ProductCategoryID = pc.ProductCategoryID
 WHERE soh.OrderDate >= '2025-05-01' AND soh.OrderDate < '2025-07-01'
 GROUP BY DATEFROMPARTS(YEAR(soh.OrderDate), MONTH(soh.OrderDate), 1), pc.Name
 ORDER BY MonthStart, Sales DESC;

@@ -10,7 +10,7 @@ SELECT
     SUM(soh.TotalDue) / COUNT(DISTINCT soh.SalesOrderID) AS AvgOrderValue,
     SUM(soh.TotalDue) / COUNT(DISTINCT soh.CustomerID) AS SalesPerCustomer
 FROM Sales.SalesOrderHeader soh
-JOIN Sales.SalesTerritory st
+INNER JOIN Sales.SalesTerritory st
     ON soh.TerritoryID = st.TerritoryID
 GROUP BY st.Name
 ORDER BY TotalSales DESC;
@@ -23,15 +23,15 @@ SELECT
     pc.Name AS CategoryName,
     SUM(sod.LineTotal) AS TotalSales
 FROM Sales.SalesOrderHeader soh
-JOIN Sales.SalesTerritory st
+INNER JOIN Sales.SalesTerritory st
     ON soh.TerritoryID = st.TerritoryID
-JOIN Sales.SalesOrderDetail sod
+INNER JOIN Sales.SalesOrderDetail sod
     ON soh.SalesOrderID = sod.SalesOrderID
-JOIN Production.Product p
+INNER JOIN Production.Product p
     ON sod.ProductID = p.ProductID
-JOIN Production.ProductSubcategory psc
+INNER JOIN Production.ProductSubcategory psc
     ON p.ProductSubcategoryID = psc.ProductSubcategoryID
-JOIN Production.ProductCategory pc
+INNER JOIN Production.ProductCategory pc
     ON psc.ProductCategoryID = pc.ProductCategoryID
 GROUP BY st.Name, pc.Name
 ORDER BY st.Name, pc.Name;
@@ -44,7 +44,7 @@ SELECT
     DATEFROMPARTS(YEAR(soh.OrderDate), MONTH(soh.OrderDate), 1) AS MonthStart,
     SUM(soh.TotalDue) AS TotalSales
 FROM Sales.SalesOrderHeader soh
-JOIN Sales.SalesTerritory st
+INNER JOIN Sales.SalesTerritory st
     ON soh.TerritoryID = st.TerritoryID
 GROUP BY st.Name, DATEFROMPARTS(YEAR(soh.OrderDate), MONTH(soh.OrderDate), 1)
 ORDER BY MonthStart, st.Name;
@@ -58,15 +58,15 @@ WITH rc AS (
         pc.Name AS CategoryName,
         SUM(sod.LineTotal) AS TotalSales
     FROM Sales.SalesOrderHeader soh
-    JOIN Sales.SalesTerritory st
+    INNER JOIN Sales.SalesTerritory st
         ON soh.TerritoryID = st.TerritoryID
-    JOIN Sales.SalesOrderDetail sod
+    INNER JOIN Sales.SalesOrderDetail sod
         ON soh.SalesOrderID = sod.SalesOrderID
-    JOIN Production.Product p
+    INNER JOIN Production.Product p
         ON sod.ProductID = p.ProductID
-    JOIN Production.ProductSubcategory psc
+    INNER JOIN Production.ProductSubcategory psc
         ON p.ProductSubcategoryID = psc.ProductSubcategoryID
-    JOIN Production.ProductCategory pc
+    INNER JOIN Production.ProductCategory pc
         ON psc.ProductCategoryID = pc.ProductCategoryID
     GROUP BY st.Name, pc.Name
 )
@@ -90,8 +90,8 @@ SELECT
     t.Name AS Region,
     SUM(sod.LineTotal) AS TotalSales
 FROM Sales.SalesOrderHeader soh
-JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
-JOIN Sales.SalesTerritory t ON soh.TerritoryID = t.TerritoryID
+INNER JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
+INNER JOIN Sales.SalesTerritory t ON soh.TerritoryID = t.TerritoryID
 WHERE t.Name IN ('Southwest', 'Germany')
 GROUP BY t.Name;
 */

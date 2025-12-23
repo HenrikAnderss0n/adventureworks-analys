@@ -4,7 +4,7 @@ SELECT TOP (10)
     pc.Name AS CategoryName,
     SUM(sod.LineTotal) AS TotalSales
 FROM Sales.SalesOrderDetail sod
-JOIN Production.Product p 
+INNER JOIN Production.Product p 
     ON sod.ProductID = p.ProductID
 LEFT JOIN Production.ProductSubcategory psc 
     ON p.ProductSubcategoryID = psc.ProductSubcategoryID

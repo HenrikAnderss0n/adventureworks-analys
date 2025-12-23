@@ -4,9 +4,9 @@ SELECT
     SUM(soh.TotalDue) AS TotalSales,
     COUNT(DISTINCT c.CustomerID) AS UniqueCustomers
 FROM Sales.SalesOrderHeader soh
-JOIN Sales.SalesTerritory st
+INNER JOIN Sales.SalesTerritory st
     ON soh.TerritoryID = st.TerritoryID
-JOIN Sales.Customer c
+INNER JOIN Sales.Customer c
     ON soh.CustomerID = c.CustomerID
 GROUP BY st.Name
 ORDER BY TotalSales DESC;

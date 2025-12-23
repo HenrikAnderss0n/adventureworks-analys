@@ -1,5 +1,6 @@
 -- VIS 5: Top 10 produkter
 SELECT TOP (10)
+    p.ProductID,
     p.Name AS ProductName,
     pc.Name AS CategoryName,
     SUM(sod.LineTotal) AS TotalSales
@@ -10,5 +11,5 @@ LEFT JOIN Production.ProductSubcategory psc
     ON p.ProductSubcategoryID = psc.ProductSubcategoryID
 LEFT JOIN Production.ProductCategory pc 
     ON psc.ProductCategoryID = pc.ProductCategoryID
-GROUP BY p.Name, pc.Name
+GROUP BY p.ProductID, p.Name, pc.Name
 ORDER BY TotalSales DESC;
